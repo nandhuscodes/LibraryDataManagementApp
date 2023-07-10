@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 class LibraryItem{
     private int id;
@@ -11,29 +12,26 @@ class LibraryItem{
     }
 }
 class Book extends LibraryItem{
+    HashMap<Integer, String> bk = new HashMap<>();
     String author;
+    int i = 1;
+    public void addBkDetail(){
+        bk.put(i, "Author name: "+author+"\nBook Title: "+title+"\nBook ID: "+getId()+"\nPublication year: "+year);
+        i++;
+    }
     public void printLastIssuedBook(){
-        if(author == null){
-            System.out.println("No issues yet");
-            return;
-        }
-        System.out.println("Author name: "+author);
-        System.out.println("Book Title: "+title);
-        System.out.println("Book ID: "+getId());
-        System.out.println("Publication year: "+year);
+        System.out.println(bk.get(bk.size()));
     }
 }
 class Magazine extends LibraryItem{
-    int issue = 0;
+    HashMap<Integer, String> mag = new HashMap<>();
+    int issue = 0, i = 1;
+    public void addMagDetail(){
+        mag.put(i, "Number of issues: "+issue+"\nMagazine Title: "+title+"\nMagazine ID: "+getId()+"\nPublication year: "+year);
+        i++;
+    }
     public void printLastIssuedMagazine(){
-        if(issue == 0){
-            System.out.println("No issues yet");
-            return;
-        }
-        System.out.println("Number of issues: "+issue);
-        System.out.println("Magazine Title: "+title);
-        System.out.println("Magazine ID: "+getId());
-        System.out.println("Publication year: "+year);
+        System.out.println(mag.get(mag.size()));
     }
 }
 public class LibraryDataManagementApp {
@@ -44,7 +42,7 @@ public class LibraryDataManagementApp {
         Scanner scanner = new Scanner(System.in);
         while (choice>=0){
             System.out.println("\n\n\tWhat function do you want to perform?\n1.) Load books detail of particular author\n2.) Issues particular book\n3.)Last issued book\n4.)Last issued magazine\n\n");
-            System.out.print("Enter your choice (1 or 2) or -1 to exit: ");
+            System.out.print("Enter your choice (1 to 4) or -1 to exit: ");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 -> {
@@ -59,6 +57,7 @@ public class LibraryDataManagementApp {
                     System.out.print("Enter year of publication: ");
                     book.year = scanner.nextInt();
                     System.out.println("Book Loaded to DataBase successfully");
+                    book.addBkDetail();
                 }
                 case 2 -> {
                     System.out.print("Enter Magazine title: ");
@@ -74,6 +73,7 @@ public class LibraryDataManagementApp {
                     System.out.print("Enter Magazine publication year: ");
                     magazine.year = scanner.nextInt();
                     System.out.println("Magazine issued successfully");
+                    magazine.addMagDetail();
                 }
                 case 3 -> book.printLastIssuedBook();
                 case 4 -> magazine.printLastIssuedMagazine();
